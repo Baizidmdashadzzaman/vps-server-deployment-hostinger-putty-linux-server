@@ -25,6 +25,12 @@ If close putty server will off, for this solution use pm2
 ```bash
  pm2 start app.js --name "your-app-name"
 ```
+
+```bash
+ npm run dev -- --port 5174 --host this command in pm2
+ pm2 start npm --name "vite-dev-server" -- run dev -- --port 5174 --host
+```
+
 ```bash
  pm2 start npm --name "vue-dev-server" -- run dev
  pm2 start npm --name "react-dev-server" -- run start
