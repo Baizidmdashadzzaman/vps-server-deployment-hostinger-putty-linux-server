@@ -27,13 +27,13 @@ If close putty server will off, for this solution use pm2
 ```
 
 ```bash
- npm run dev -- --port 5174 --host this command in pm2
- pm2 start npm --name "vite-dev-server" -- run dev -- --port 5174 --host
+ npm run dev -- --port 5173 --host
+ pm2 start npm --name "Run Website" -- run dev -- --port 5173 --host
 ```
 
 ```bash
  pm2 start npm --name "vue-dev-server" -- run dev
- pm2 start npm --name "react-dev-server" -- run start
+ pm2 start npm --name "Run Admin" -- run start //export NODE_OPTIONS=--openssl-legacy-provider react e ata chara choler na
  pm2 start npm --name "Run Web" -- run dev
  pm2 start src/index.js --name "Run Admin"
  pm2 start serve --name "Run Admin"
