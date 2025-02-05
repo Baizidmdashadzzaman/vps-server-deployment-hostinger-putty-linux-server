@@ -71,6 +71,13 @@ Stop Running Applications:
  pm2 delete "Run Admin"
 ```
 
+```bash
+ pm2 restart all
+```
+
+
+
+
 ///////////////////////////////////////////////
 
 Allow legacy in node js:
