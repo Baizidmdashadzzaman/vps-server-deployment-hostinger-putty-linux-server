@@ -35,7 +35,7 @@ Create a configuration file for each domain in /etc/nginx/sites-available.
 Configuration for belivo.io
 File: 
 ```bash
-nano /etc/nginx/sites-available/belivo.io
+nano /etc/nginx/sites-available/belivo.io.conf
 ```
 
 ```bash
@@ -56,7 +56,7 @@ server {
 
 Configuration for admin.belivo.io
 ```bash
-nano /etc/nginx/sites-available/admin.belivo.io
+nano /etc/nginx/sites-available/admin.belivo.io.conf
 ```
 
 ```bash
@@ -77,7 +77,7 @@ server {
 
 Configuration for api.belivo.io
 ```bash
-nano /etc/nginx/sites-available/api.belivo.io
+nano /etc/nginx/sites-available/api.belivo.io.conf
 ```
 
 ```bash
@@ -100,13 +100,13 @@ server {
 Create symbolic links in /etc/nginx/sites-enabled for each configuration:
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/belivo.io /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/belivo.io.conf /etc/nginx/sites-enabled/
 ```
 ```bash
-sudo ln -s /etc/nginx/sites-available/admin.belivo.io /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/admin.belivo.io.conf /etc/nginx/sites-enabled/
 ```
 ```bash
-sudo ln -s /etc/nginx/sites-available/api.belivo.io /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/api.belivo.io.conf /etc/nginx/sites-enabled/
 ```
 
 5. Test Nginx Configuration
