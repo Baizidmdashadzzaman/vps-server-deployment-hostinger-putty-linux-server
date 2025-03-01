@@ -23,7 +23,7 @@ If close putty server will off, for this solution use pm2
 ```
 
 ```bash
- pm2 start app.js --name "your-app-name"
+ pm2 start app.js --name "API"
 ```
 
 ```bash
@@ -73,6 +73,12 @@ Stop Running Applications:
 
 ```bash
  pm2 restart all
+```
+
+start all preious 
+
+```bash
+ pm2 resurrect
 ```
 
 
