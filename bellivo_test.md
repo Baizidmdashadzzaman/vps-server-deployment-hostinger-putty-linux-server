@@ -71,4 +71,21 @@ certbot --nginx -d web.belivo.io
 
 certbot renew --dry-run
 
+dig A bellivo.dk +short
 
+nano /etc/nginx/sites-available/bellivo.dk.conf
+
+server {
+    listen 80;
+    server_name bellivo.dk www.bellivo.dk;
+
+    location / {
+        root /var/www/Bellivo_1.0/Bellivo/Bellivo-Web-App/dist;
+        try_files $uri /index.html;
+    }
+}
+
+ln -s /etc/nginx/sites-available/bellivo.dk.conf /etc/nginx/sites-enabled/
+
+
+certbot --nginx -d bellivo.dk
