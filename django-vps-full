@@ -1,0 +1,105 @@
+1️⃣ Folder structure & virtual environment
+/var/www/Yourtour/
+├─ venv/            # Python virtual environment
+├─ Yourtourguide/   # Django project folder
+├─ static/          # Collected static files
+├─ media/           # Media files
+
+
+Create & activate venv:
+
+cd /var/www/Yourtour
+python3 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+
+2️⃣ Gunicorn systemd service
+
+File: /etc/systemd/system/yourtour.service
+
+[Unit]
+Description=Gunicorn instance to serve Yourtour Django App
+After=network.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/var/www/Yourtour
+Environment="PATH=/var/www/Yourtour/venv/bin"
+ExecStart=/var/www/Yourtour/venv/bin/gunicorn \
+          --workers 3 \
+          --bind unix:/var/www/Yourtour/yourtour.sock \
+          Yourtourguide.wsgi:application
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+
+Reload & start:
+
+sudo systemctl daemon-reload
+sudo systemctl start yourtour
+sudo systemctl enable yourtour
+sudo systemctl status yourtour
+
+
+Check socket:
+
+ls -l /var/www/Yourtour/yourtour.sock
+
+
+✅ Should exist (socket file for Nginx)
+
+3️⃣ Nginx configuration
+
+File: /etc/nginx/sites-available/copenhagenmemories
+
+server {
+    listen 80;
+    server_name copenhagenmemories.com www.copenhagenmemories.com;
+
+    location / {
+        proxy_pass http://unix:/var/www/Yourtour/yourtour.sock;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /static/ {
+        alias /var/www/Yourtour/static/;
+    }
+
+    location /media/ {
+        alias /var/www/Yourtour/media/;
+    }
+}
+
+
+Enable & restart Nginx:
+
+sudo ln -s /etc/nginx/sites-available/copenhagenmemories /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx
+sudo ufw allow 'Nginx Full'
+
+4️⃣ SSL with Let’s Encrypt
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d copenhagenmemories.com -d www.copenhagenmemories.com
+
+
+Agree TOS
+
+Email required
+
+HTTP → HTTPS redirect → Yes ✅
+
+5️⃣ Django static files
+cd /var/www/Yourtour
+source venv/bin/activate
+python manage.py collectstatic
+
+
+Make sure STATIC_ROOT = /var/www/Yourtour/static/ in settings.py
